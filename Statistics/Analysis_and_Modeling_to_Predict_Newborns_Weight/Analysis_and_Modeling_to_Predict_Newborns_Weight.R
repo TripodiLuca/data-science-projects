@@ -1,4 +1,17 @@
-### Final Project - Neonatal Weight Prediction ###
+### Analysis and Modeling to Predict Newborns Weight ###
+
+#########################################################################################
+# This project analyzes data collected from 3 hospitals on 2500 newborns, including
+# variables related to the mother and the newborn, as well as the type of delivery.
+# The main goal is to assess whether birth weight can be predicted from these variables,
+# with particular attention to maternal characteristics. The analysis includes an
+# initial descriptive and inferential phase to explore distributions and test differences
+# between groups, followed by a multivariate analysis using multiple linear regression
+# models to study relationships between variables and evaluate the predictive power
+# of the model.
+#########################################################################################
+
+
 
 
 ## Packages ##

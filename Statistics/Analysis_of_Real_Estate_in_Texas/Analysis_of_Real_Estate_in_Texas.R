@@ -1,4 +1,16 @@
-### 17 - Final Project - Real Estate Texas ###
+### Analysis of Real Estate in Texas ###
+
+####################################################################################
+# This project focuses on applying exploratory data analysis techniques to a 
+# dataset concerning real estate sales in Texas. The analysis proceeds step by
+# step describing variables, computing summary statistics, identifying variability,
+# asymmetry and building new measures such as the average price or an indicator 
+# of listing effectiveness. Probability calculations and comparisons across cities
+# and time periods are also included. Finally, using ggplot2, several visualizations
+# are created and interpreted to highlight patterns and insights.
+####################################################################################
+
+
 
 
 # Packages
@@ -43,19 +55,25 @@ gini.index_norm <- function(x) {
 }
 
 
+
 # Set working directory
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 
 
 
 ##### 
 # 1 #
 #####
+
 # Import the csv file
 data_real_estate_texas <- read.csv("real_estate_texas.csv", header = TRUE, sep = ',')
 
 # Inspect the header
 head(data_real_estate_texas, 5)
+
+
+
 
 #####
 # 2 #
@@ -91,6 +109,7 @@ head(data_real_estate_texas, 5)
 #####
 # 3 #
 #####
+
 ### Measures of Central Tendency ###
 # Mode
 # Minimum
@@ -143,22 +162,24 @@ for (variable_name in names(data_real_estate_texas)) {
 #####
 # 4 #
 #####
-### Evaluate the variability ##
+### Evaluate the variability ###
 
 # Show standard deviation for numerical variables
-variable_SD <- c("sales_SD", "volume_SD", "median_price_SD", "listings_SD", "months_inventory_SD")
-
-for (variable_name in variable_SD) {
-  variable_value <- round(eval(parse(text = variable_name)), 2)
-  cat(variable_name, " = ", variable_value, "\n", sep = "")
+for (variable_name in names(data_real_estate_texas)) {
+  variable_real_estate_texas = data_real_estate_texas[[variable_name]]
+  if (is.numeric(variable_real_estate_texas)) {
+    variable_value <- round(sd(variable_real_estate_texas), 2)
+    cat(variable_name, "_SD", " = ", variable_value, "\n", sep = "")
+  }
 }
 
 # Show Coefficients of variation for numerical variables
-variable_CV <- c("sales_CV", "volume_CV", "median_price_CV", "listings_CV", "months_inventory_CV")
-
-for (variable_name in variable_CV) {
-  variable_value <- round(eval(parse(text = variable_name)), 2)
-  cat(variable_name, " = ", variable_value, "\n", sep = "")
+for (variable_name in names(data_real_estate_texas)) {
+  variable_real_estate_texas = data_real_estate_texas[[variable_name]]
+  if (is.numeric(variable_real_estate_texas)) {
+    variable_value <- round(sd(variable_real_estate_texas)/mean(variable_real_estate_texas)*100, 2)
+    cat(variable_name, "_CV", " = ", variable_value, "\n", sep = "")
+  }
 }
 
 # Note: since the domains of numeric variables consist only of positive
@@ -190,8 +211,8 @@ summary(months_inventory)
 # greatest asymmetry among the variables. The signs of Fisher indexes were
 # predicted by comparing the mean and median values: variables with means
 # higher than their medians show positive asymmetry, so with distributions
-# skewed to the left; "median_price" variable is the only one characterized by
-# a negative index and so skewness to the right
+# skewed to the right; "median_price" variable is the only one characterized by
+# a negative index and so skewness to the left
 
 
 # Z score standardization
@@ -473,8 +494,8 @@ ggplot(data = data_real_estate_texas) +
   ) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme_minimal()
-# Note: volume distributions across the months seem to have an higher
-# dispersion when the the median price is higher
+# Note: volume distributions across the months seem to have a higher
+# dispersion when the median price is higher
 
 
 
@@ -596,5 +617,6 @@ print(listings_plot)
 # with a rising trend from the beginning of the year until mid-year, followed by
 # a decrease towards year-end. This pattern is even more pronounced in Tyler city,
 # which has a significantly higher number of advertisements compared to the others
+
 
 
